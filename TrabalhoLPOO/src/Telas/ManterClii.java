@@ -71,6 +71,7 @@ public class ManterClii extends javax.swing.JFrame {
         scroll = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         vincConta = new javax.swing.JButton();
+        realizarOperacao = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -171,6 +172,13 @@ public class ManterClii extends javax.swing.JFrame {
             }
         });
 
+        realizarOperacao.setText("Realizar operação em uma conta");
+        realizarOperacao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                realizarOperacaoMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -190,12 +198,14 @@ public class ManterClii extends javax.swing.JFrame {
                                 .addComponent(buttonListar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 21, Short.MAX_VALUE))
                             .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(comboBoxOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(vincConta, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(realizarOperacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(vincConta, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE))))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(159, 159, 159)
@@ -264,7 +274,9 @@ public class ManterClii extends javax.swing.JFrame {
                                 .addComponent(comboBoxOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(vincConta))
                             .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(199, 199, 199))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(realizarOperacao)
+                        .addGap(165, 165, 165))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
@@ -395,6 +407,10 @@ public class ManterClii extends javax.swing.JFrame {
         new VincularClienteConta().setVisible(true);
     }//GEN-LAST:event_vincContaMouseClicked
 
+    private void realizarOperacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_realizarOperacaoMouseClicked
+        new Operações().setVisible(true);
+    }//GEN-LAST:event_realizarOperacaoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -457,6 +473,7 @@ public class ManterClii extends javax.swing.JFrame {
     private javax.swing.JTextField newRG;
     private javax.swing.JTextField newRenda;
     private javax.swing.JTextField newSobrenome;
+    private javax.swing.JButton realizarOperacao;
     private javax.swing.JScrollPane scroll;
     private javax.swing.JTable tabela;
     private javax.swing.JButton vincConta;

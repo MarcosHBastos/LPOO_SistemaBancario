@@ -6,12 +6,11 @@ package Algs;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Marcos
  */
-public class Conta implements ContaI{
+public class Conta implements ContaI {
 
     private double saldo;
     private String cpf;
@@ -20,7 +19,6 @@ public class Conta implements ContaI{
         this.saldo = depositoInicial;
         this.cpf = cpf;
     }
-
 
     @Override
     public double getSaldo() {

@@ -6,6 +6,7 @@
 package Telas;
 
 import Algs.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -57,6 +58,7 @@ public class VincularClienteConta extends javax.swing.JFrame {
             label2.setText("Montante mínimo: ");
             campo1.setText("");
             campo2.setText("");
+            campo3.setText("");
         }
     }
 
@@ -196,9 +198,9 @@ public class VincularClienteConta extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(resultadoBusca)
                 .addGap(65, 65, 65)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label1)
-                    .addComponent(campo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(campo1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label1))
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -218,23 +220,22 @@ public class VincularClienteConta extends javax.swing.JFrame {
         boolean achou = false;
         setCamposInvisible();
         for (int i = 0; i < ManterClii.listaDeClientes.size(); i++) {
-            if (contaCPF.getText() == ManterClii.listaDeClientes.get(i).getCpf());
-            {
+            if (contaCPF.getText().equals(ManterClii.listaDeClientes.get(i).getCpf())) {
                 //cli = ManterClii.listaDeClientes.get(i);
                 achou = true;
                 indice = i;
-                break;
+
             }
         }
         if (achou) {
             if (ManterClii.listaDeClientes.get(indice).getHaveConta()) {
                 resultadoBusca.setText("Já existe uma conta vinculada a esse CPF!");
-               
+
             } else {
                 opt = comboBoxConta.getSelectedIndex();
-                resultadoBusca.setText(ManterClii.listaDeClientes.get(indice).getCpf());/*"Cliente: " + ManterClii.listaDeClientes.get(i).getNome() + " " + ManterClii.listaDeClientes.get(i).getSobrenome()
+                resultadoBusca.setText("Cliente: " + ManterClii.listaDeClientes.get(indice).getNome() + " " + ManterClii.listaDeClientes.get(indice).getSobrenome()
                         + "           -          Selecionado: " + comboBoxConta.getSelectedItem());
-                */setCamposVisible(opt);
+                setCamposVisible(opt);
             }
         } else {
             resultadoBusca.setText("O CPF informado não foi encontrado na base de dados!");
@@ -265,6 +266,7 @@ public class VincularClienteConta extends javax.swing.JFrame {
             ManterClii.listaDeContas.add(contai);
         }
         ManterClii.listaDeClientes.get(indice).setIdConta((ManterClii.listaDeContas.size() - 1));
+        JOptionPane.showMessageDialog(null, "Cliente vinculado a conta com sucesso!");
     }//GEN-LAST:event_vincularContaMouseClicked
 
     /**

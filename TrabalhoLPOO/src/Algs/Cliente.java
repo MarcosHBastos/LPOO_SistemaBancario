@@ -59,6 +59,10 @@ public class Cliente {
         this.sobrenome = sobrenome;
     }
 
+    public int getIdConta() {
+        return this.idConta;
+    }
+    
     public String getRg() {
         return rg;
     }
