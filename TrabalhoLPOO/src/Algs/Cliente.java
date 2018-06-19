@@ -68,7 +68,7 @@ public class Cliente {
     }
 
     public String getCpf() {
-        return cpf;
+        return this.cpf;
     }
 
     public void setCpf(String cpf) {

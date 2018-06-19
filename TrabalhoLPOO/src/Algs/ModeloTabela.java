@@ -14,9 +14,9 @@ import javax.swing.table.AbstractTableModel;
  * @author Marcos
  */
 public class ModeloTabela extends AbstractTableModel {
-     private String[] colunas = new String[]{"IdCliente", "Nome", "Sobrenome", "CPF", "Salario"};
+     private String[] colunas = new String[]{"Nome", "Sobrenome", "RG", "CPF", "Endereço", "Renda"};
 
-    private List<Cliente> lista = TestaConta.clientes;    
+    private List<Cliente> lista = new ArrayList();    
 
 
     @Override
@@ -44,26 +44,27 @@ public class ModeloTabela extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Cliente customer = lista.get(rowIndex);
+        Cliente cli = lista.get(rowIndex);
         switch (columnIndex) {
-            case 0: return customer.getId();//if column 1 (name)
-            case 1: return customer.getNome();//if column 2 (birthday)
-            case 2: return customer.getSobrenome();
-            case 3: return customer.getCpf();
-            case 4: return customer.getRenda();
+            case 0: return cli.getNome();//if column 2 (birthday)
+            case 1: return cli.getSobrenome();
+            case 2: return cli.getRg();
+            case 3: return cli.getCpf();
+            case 4: return cli.getEndereco();
+            case 5: return cli.getRenda();
             default : return null;
         }
     }
 
-    public void adicionaContato(Cliente customer) {
-        this.lista.add(customer);
+    public void adicionaContato(Cliente cli) {
+        this.lista.add(cli);
         this.fireTableRowsInserted(lista.size()-1,lista.size()-1);//update JTable
         System.out.println(this.lista.size());
     }
     
-    public boolean removeContato(Cliente customer) {
-        int linha = this.lista.indexOf(customer);
-        boolean result = this.lista.remove(customer);
+    public boolean removeCliente(Cliente cli) {
+        int linha = this.lista.indexOf(cli);
+        boolean result = this.lista.remove(cli);
         this.fireTableRowsDeleted(linha,linha);//update JTable
         return result;
     }
@@ -82,7 +83,7 @@ public class ModeloTabela extends AbstractTableModel {
         this.fireTableRowsDeleted(0,indice);//update JTable
     }
 
-    public Cliente getContato(int linha){
+    public Cliente getCliente(int linha){
         return lista.get(linha);
     }
     
