@@ -36,7 +36,7 @@ public class ContaCorrente extends Conta {
     }
 
     public boolean saca(double valor) {
-        if (valor > limite) {
+        if (valor < limite) {
             super.saca(valor);
             return true;
         } else {

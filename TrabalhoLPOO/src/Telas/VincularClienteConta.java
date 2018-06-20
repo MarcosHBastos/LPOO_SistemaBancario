@@ -44,7 +44,7 @@ public class VincularClienteConta extends javax.swing.JFrame {
             campo2.setVisible(true);
             campo3.setVisible(false);
             vincularConta.setVisible(true);
-            label2.setText("Limite de crédito: ");
+            label2.setText("Limite de saldo: ");
             campo1.setText("");
             campo2.setText("");
         } else if (opt == 1) {
@@ -248,25 +248,34 @@ public class VincularClienteConta extends javax.swing.JFrame {
     }//GEN-LAST:event_voltarButtonMouseClicked
 
     private void vincularContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vincularContaMouseClicked
-
+        boolean parseError = false;
         if (opt == 0) {
+            try {
+                double limite = Double.parseDouble(campo2.getText());
+                double depIni = Double.parseDouble(campo1.getText());
 
-            double limite = Double.parseDouble(campo2.getText());
-            double depIni = Double.parseDouble(campo1.getText());
-
-            ContaCorrente contac = new ContaCorrente(limite, depIni, ManterClii.listaDeClientes.get(indice).getCpf());
-            ManterClii.listaDeContas.add(contac);
-
+                ContaCorrente contac = new ContaCorrente(limite, depIni, ManterClii.listaDeClientes.get(indice).getCpf());
+                ManterClii.listaDeContas.add(contac);
+            } catch (NumberFormatException e) {
+                parseError = true;
+                JOptionPane.showMessageDialog(null, "Valor informado inválido!");
+            }
         } else if (opt == 1) {
-
-            double depIni = Double.parseDouble(campo1.getText());
-            double depMin = Double.parseDouble(campo3.getText());
-            double montanteMin = Double.parseDouble(campo2.getText());
-            ContaInvestimento contai = new ContaInvestimento(depMin, montanteMin, depIni, ManterClii.listaDeClientes.get(indice).getCpf());
-            ManterClii.listaDeContas.add(contai);
+            try {
+                double depIni = Double.parseDouble(campo1.getText());
+                double depMin = Double.parseDouble(campo3.getText());
+                double montanteMin = Double.parseDouble(campo2.getText());
+                ContaInvestimento contai = new ContaInvestimento(depMin, montanteMin, depIni, ManterClii.listaDeClientes.get(indice).getCpf());
+                ManterClii.listaDeContas.add(contai);
+            } catch (NumberFormatException e) {
+                parseError = true;
+                JOptionPane.showMessageDialog(null, "Valor informado inválido!");
+            }
         }
-        ManterClii.listaDeClientes.get(indice).setIdConta((ManterClii.listaDeContas.size() - 1));
-        JOptionPane.showMessageDialog(null, "Cliente vinculado a conta com sucesso!");
+        if (!parseError) {
+            ManterClii.listaDeClientes.get(indice).setIdConta((ManterClii.listaDeContas.size() - 1));
+            JOptionPane.showMessageDialog(null, "Cliente vinculado a conta com sucesso!");
+        }
     }//GEN-LAST:event_vincularContaMouseClicked
 
     /**

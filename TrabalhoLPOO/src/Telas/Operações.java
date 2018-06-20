@@ -33,6 +33,11 @@ public class Operações extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Informe uma conta válida!");
     }
 
+    private void messageErroOperacao() {
+        JOptionPane.showMessageDialog(null, "Erro ao realizar operação");
+        resetCampos();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -97,6 +102,11 @@ public class Operações extends javax.swing.JFrame {
         });
 
         voltar.setText("Voltar");
+        voltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                voltarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -156,7 +166,6 @@ public class Operações extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(valorSaque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(sacarValor)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(depositarValor)
                     .addComponent(valorDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -194,9 +203,29 @@ public class Operações extends javax.swing.JFrame {
     }//GEN-LAST:event_selecBotaoMouseClicked
 
     private void sacarValorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sacarValorMouseClicked
+         boolean parseError = false;
         if (!achou) {
             messageContaInvalida();
             resetCampos();
+        } else if ("".equals(valorSaque.getText())) {
+            JOptionPane.showMessageDialog(null, "Informe um valor para sacar");
+        } else {
+            double valor = 0;
+            try {
+                valor = Double.parseDouble(valorSaque.getText());
+            } catch (NumberFormatException e) {
+                messageErroOperacao();
+                parseError = true;
+            }
+            if (!parseError) {
+                if (!ManterClii.listaDeContas.get(indiceConta).saca(valor)) {
+                    System.out.println("Chegou aqui");
+                    messageErroOperacao();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Valor sacado da conta: R$" + valorSaque.getText());
+                    resetCampos();
+                }
+            }
         }
     }//GEN-LAST:event_sacarValorMouseClicked
 
@@ -210,24 +239,45 @@ public class Operações extends javax.swing.JFrame {
     }//GEN-LAST:event_verSaldoMouseClicked
 
     private void depositarValorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_depositarValorMouseClicked
+        boolean parseError = false;
         if (!achou) {
             messageContaInvalida();
             resetCampos();
-        } else if("".equals(valorDeposito.getText())) {
+        } else if ("".equals(valorDeposito.getText())) {
             JOptionPane.showMessageDialog(null, "Informe um valor para depositar");
+        } else {
+            double valor = 0;
+            try {
+                valor = Double.parseDouble(valorDeposito.getText());
+            } catch (NumberFormatException e) {
+                messageErroOperacao();
+                parseError = true;
+            }
+            if (!parseError) {
+                if (!ManterClii.listaDeContas.get(indiceConta).deposita(valor)) {
+                    messageErroOperacao();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Valor depositado em conta: R$" + valorDeposito.getText());
+                    resetCampos();
+                }
+            }
         }
-        else {
-            JOptionPane.showMessageDialog(null, "Valor depositado na conta: R$"+ valorDeposito.getText()) ;
-        }
-        
+
     }//GEN-LAST:event_depositarValorMouseClicked
 
     private void remuneraContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_remuneraContaMouseClicked
         if (!achou) {
             messageContaInvalida();
             resetCampos();
+        } else {
+            ManterClii.listaDeContas.get(indiceConta).remunera();
+            JOptionPane.showMessageDialog(null,"Saldo da conta acrescido da taxa de remuneração");
         }
     }//GEN-LAST:event_remuneraContaMouseClicked
+
+    private void voltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarMouseClicked
+        setVisible(false);
+    }//GEN-LAST:event_voltarMouseClicked
 
     /**
      * @param args the command line arguments

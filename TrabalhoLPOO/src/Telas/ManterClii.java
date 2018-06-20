@@ -8,6 +8,7 @@ package Telas;
 import Algs.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,8 +29,10 @@ public class ManterClii extends javax.swing.JFrame {
         Cliente a = new Cliente("Marcos", "Bastos", "123234456", "10", "Rua Qualquer", 1200);
         Cliente b = new Cliente("Ana", "Nicole", "156776545", "20", "Rua Tal", 1500);
         Cliente c = new Cliente("Michelly", "Narita", "172387372", "30", "Rua Tanto Faz", 2000);
-        
-        listaDeClientes.add(a); listaDeClientes.add(b); listaDeClientes.add(c);
+
+        listaDeClientes.add(a);
+        listaDeClientes.add(b);
+        listaDeClientes.add(c);
         modelo.atualizarTabela(listaDeClientes);
     }
 
@@ -331,24 +334,38 @@ public class ManterClii extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private boolean checkCampos() {
+        if (newNome.getText().isEmpty() || newSobrenome.getText().isEmpty() || newRG.getText().isEmpty() || newCPF.getText().isEmpty() || newEnd.getText().isEmpty() || newRenda.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     private void alterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_alterarMouseClicked
-        if (linhaClicada != -1) {
-            Cliente cliente = modelo.getCliente(linhaClicada);
+        if (checkCampos()) {
+            if (linhaClicada != -1) {
+                try {
+                    Cliente cliente = modelo.getCliente(linhaClicada);
 
-            cliente.setNome(newNome.getText());
-            cliente.setSobrenome(newSobrenome.getText());
-            cliente.setRg(newRG.getText());
-            cliente.setCpf(newCPF.getText());
-            cliente.setEndereco(newEnd.getText());
-            cliente.setRenda(Double.parseDouble(newRenda.getText()));
-            //Atualiza tabela
-            modelo.fireTableRowsUpdated(linhaClicada, linhaClicada);
+                    cliente.setNome(newNome.getText());
+                    cliente.setSobrenome(newSobrenome.getText());
+                    cliente.setRg(newRG.getText());
+                    cliente.setCpf(newCPF.getText());
+                    cliente.setEndereco(newEnd.getText());
+                    cliente.setRenda(Double.parseDouble(newRenda.getText()));
 
+                    modelo.fireTableRowsUpdated(linhaClicada, linhaClicada);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Erro na passagem de parâmetros");
+                }
+            }
         }
     }//GEN-LAST:event_alterarMouseClicked
 
     private void listarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listarMouseClicked
+
         modelo.atualizarTabela(listaDeClientes);
     }//GEN-LAST:event_listarMouseClicked
 
@@ -358,7 +375,6 @@ public class ManterClii extends javax.swing.JFrame {
         for (int i = 0; i < linhasSelecionadas.length; i++) {
             Cliente cli = modelo.getCliente(linhasSelecionadas[i]);
             listaExcluir.add(cli);
-
         }
         for (Cliente cli : listaExcluir) {
             listaDeClientes.remove(cli);
@@ -376,25 +392,27 @@ public class ManterClii extends javax.swing.JFrame {
     }//GEN-LAST:event_limparMouseClicked
 
     private void incluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_incluirMouseClicked
-
-        String nome = newNome.getText();
-        String sNome = newSobrenome.getText();
-        String rg = newRG.getText();
-        String cpf = newCPF.getText();
-        String endereco = newEnd.getText();
-        Double renda = Double.parseDouble(newRenda.getText());
-        Cliente cli = new Cliente(nome, sNome, rg, cpf, endereco, renda);
-        listaDeClientes.add(cli);
-        modelo.adicionaContato(cli);
-
+        if (checkCampos()) {
+            try {
+                String nome = newNome.getText();
+                String sNome = newSobrenome.getText();
+                String rg = newRG.getText();
+                String cpf = newCPF.getText();
+                String endereco = newEnd.getText();
+                Double renda = Double.parseDouble(newRenda.getText());
+                Cliente cli = new Cliente(nome, sNome, rg, cpf, endereco, renda);
+                listaDeClientes.add(cli);
+                modelo.adicionaContato(cli);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Erro na passagem de parâmetros");
+            }
+        }
     }//GEN-LAST:event_incluirMouseClicked
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
-        //Pega a linha clicada
         linhaClicada = tabela.rowAtPoint(evt.getPoint());
-        //Pega o contato da linha clidada
         Cliente cli = modelo.getCliente(linhaClicada);
-        //Seta os dados nos componentes
+
         newNome.setText(cli.getNome());
         newSobrenome.setText(cli.getSobrenome());
         newRG.setText(cli.getRg());
